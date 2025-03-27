@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 // testing
-
+// testig 2
 typedef struct{
 
     //riff header
