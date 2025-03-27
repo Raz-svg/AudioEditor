@@ -13,7 +13,7 @@ typedef struct {
     char subchunk1id[4];
     int32_t subchunk1size;
     int16_t audioformat;
-    int16_t numchannels;
+    int16_t numchannels;// streo = 2, mono = 1
     int32_t samplerate;
     int32_t byterate;
     int16_t blockalign;
@@ -22,6 +22,7 @@ typedef struct {
     // data Subchunk
     char subchunk2id[4];
     int32_t subchunk2size;
+
 } WAVHeader;
 
 void read_wav_header(const char* filename) {
@@ -40,11 +41,11 @@ void read_wav_header(const char* filename) {
         return;
     }
 
-    printf("Audio Format: %d\n", header.format);
+    printf("Audio Format: %d\n", header.audioformat);// generallu pcm is 1
     printf("Channels: %d\n", header.numchannels);
     printf("Sample Rate: %d Hz\n", header.samplerate);
     printf("Bit Depth: %d-bit\n", header.bitspersample);
-    printf("Data Size: %u bytes\n", header.subchunk2size);
+    printf("Data Size: %u bytes\n", header.chunksize);
 
     fclose(file);
 }
