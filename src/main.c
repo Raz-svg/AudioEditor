@@ -1,23 +1,30 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h> // For fixed-size integers
 
-// testing
-// testig 2
-typedef struct{
+typedef struct {
+    // RIFF Header
+    char chunkid[4];
+    int32_t chunksize;
+    char format[4];
 
-    //riff header
-    char chunkid[4]="RIFF";
-    int chunksize;
-    char format[4]="WAVE";
-    //fmt(format) subchunk
-    char subchunk1id[4]="fmt ";
-    int subchunk1size=16;
-    //data subchunk
-    char subchunk2id[4]="data";
-    int subchunk2size;
-    
-}header;
+    // fmt Subchunk
+    char subchunk1id[4];
+    int32_t subchunk1size;
+    int16_t audioformat;
+    int16_t numchannels;
+    int32_t samplerate;
+    int32_t byterate;
+    int16_t blockalign;
+    int16_t bitspersample;
 
-int main(){
+    // data Subchunk
+    char subchunk2id[4];
+    int32_t subchunk2size;
+} header;
 
+int main() {
+    FILE *fp;
+    header h;
 }
