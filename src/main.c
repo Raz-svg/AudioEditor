@@ -96,7 +96,8 @@ struct node *insert(int16_t *data){
 
 
 int main() {
-    
+
+    // this also for more than 2 wav files
     read_wav_header("sampl.wav");
     read_wav_header("second.wav");
     int16_t* v=read_pcm_data("sampl.wav");
@@ -106,6 +107,8 @@ int main() {
     *    printf("%d\n",v[i]);
     *}
     */
+
+    /// for more than two wav files
     insert(v);
     insert(b);
 
@@ -116,6 +119,8 @@ int main() {
           return 1;
       }
       
+
+      // change this ---> for random  size
       // Update header for new file
       WAVHeader new_header = header;
       new_header.subchunk2size *= 2; // Double the data size
