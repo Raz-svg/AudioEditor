@@ -55,6 +55,8 @@ void read_wav_header(const char* filename) {
     printf("Sample Rate: %d Hz\n", header.samplerate);
     printf("Bit Depth: %d-bit\n", header.bitspersample);
     printf("Data Size: %u bytes\n", header.chunksize);
+    printf("subchunlid: %s\n",header.subchunk1id);
+    printf("subchunk1size: %d\n",header.subchunk1size);
 
     fclose(file);
 }
