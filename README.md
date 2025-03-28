@@ -52,10 +52,14 @@ Push your branch to the remote repository:
 ```bash
 git push origin feature-branch-name
 ```
+After using a single time you can directly use 
+```bash
+git push
+```
 
 If using HTTPS, you may be prompted again for your GitHub credentials.
 
-### 7. Create a Pull Request
+### 7. Create a Pull Request only if you are working on a different branch but for now we will only be working on  main 
 - Go to the repository on GitHub.
 - Navigate to the **Pull Requests** tab.
 - Click **New Pull Request** and select your branch.
