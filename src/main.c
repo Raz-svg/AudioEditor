@@ -27,12 +27,10 @@ WAVHeader header;
 
 struct node{
 
-    int16_t pcm;
+    int16_t pcm[];
     struct node *next;
-    struct node *prev;
-
 };
-
+struct node* head=NULL;
 
 // mainly for debugging
 void read_wav_header(const char* filename) {
@@ -77,15 +75,42 @@ int16_t *read_pcm_data(const char* filename) {
     return data;
 }
 
+struct node *insert(int *data){
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->pcm=data;
+    temp->next=NULL;
+    if(head == NULL){
+        head=temp;
+    }
+    else{
+        struct node* temp1=head;
+        while(temp1->next!=NULL){
+            temp1=temp1->next;
+        }
+        temp1->next=temp;
+
+    }
+    return head;
+
+}
+
+void merge(struct node* l1,struct node* l2){
+    
+}
+
 
 int main() {
     
     read_wav_header("sampl.wav");
+    read_wav_header("second.wav");
     int16_t* v=read_pcm_data("sampl.wav");
-    for(int i=0;i<1000;i++)
-    {
-        printf("%d\n",v[i]);
-    }
-    
+    int16_t* b=read_pcm_data("second.wav");
+   /* for(int i=0;i<1000;i++)
+    *{
+    *    printf("%d\n",v[i]);
+    *}
+    */
+    struct node* list1=insert(v);
+    struct node* list2=insert(b);
     return 0;
 }
