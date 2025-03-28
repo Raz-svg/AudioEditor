@@ -27,7 +27,7 @@ WAVHeader header;
 
 struct node{
 
-    int16_t pcm[];
+    int16_t *pcm;
     struct node *next;
 };
 struct node* head=NULL;
@@ -48,7 +48,7 @@ void read_wav_header(const char* filename) {
         return;
     }
 
-    printf("Audio Format: %d\n", header.audioformat);// generallu pcm is 1
+    printf("Audio Format: %d\n", header.audioformat);// generally pcm is 1
     printf("Channels: %d\n", header.numchannels);
     printf("Sample Rate: %d Hz\n", header.samplerate);
     printf("Bit Depth: %d-bit\n", header.bitspersample);
@@ -75,7 +75,7 @@ int16_t *read_pcm_data(const char* filename) {
     return data;
 }
 
-struct node *insert(int *data){
+struct node *insert(int16_t *data){
     struct node *temp=(struct node*)malloc(sizeof(struct node));
     temp->pcm=data;
     temp->next=NULL;
@@ -94,10 +94,6 @@ struct node *insert(int *data){
 
 }
 
-void merge(struct node* l1,struct node* l2){
-    
-}
-
 
 int main() {
     
@@ -110,7 +106,38 @@ int main() {
     *    printf("%d\n",v[i]);
     *}
     */
-    struct node* list1=insert(v);
-    struct node* list2=insert(b);
+    insert(v);
+    insert(b);
+
+      // Writing to a new file
+      FILE* file = fopen("connected.wav", "wb");
+      if (file == NULL) {
+          printf("Error creating file\n");
+          return 1;
+      }
+      
+      // Update header for new file
+      WAVHeader new_header = header;
+      new_header.subchunk2size *= 2; // Double the data size
+      new_header.chunksize = 36 + new_header.subchunk2size;
+      
+      // Write updated header
+      fwrite(&new_header, sizeof(WAVHeader), 1, file);
+      
+      // Write PCM data from linked list
+      struct node* temp = head;
+      while (temp != NULL) {
+          fwrite(temp->pcm, sizeof(int16_t), header.subchunk2size / sizeof(int16_t), file);
+          temp = temp->next;
+      }
+      
+      fclose(file);
+      printf("WAV files successfully merged into connected.wav\n");
+      
+      return 0;
+    
+
+
+
     return 0;
 }
