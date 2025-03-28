@@ -25,6 +25,14 @@ typedef struct {
 
 WAVHeader header;
 
+struct node{
+
+    int16_t pcm;
+    struct node *next;
+    struct node *prev;
+
+};
+
 
 // mainly for debugging
 void read_wav_header(const char* filename) {
@@ -58,9 +66,9 @@ int16_t *read_pcm_data(const char* filename) {
     // moves the pointer offset bytes from the origin
     fseek(file, 44, SEEK_SET);// skip the header i.e 44 bytes
 
-    // read the data
-    int16_t* data = (int16_t*)malloc(header.subchunk2size);
-    fread(data, header.subchunk2size, 1, file);
+    // read the data  
+    int16_t* data = (int16_t*)malloc(header.subchunk2size/sizeof(int16_t));
+    fread(data, sizeof(int16_t), header.subchunk2size/sizeof(int16_t), file);
 
     // do something with the data
     fclose(file);
@@ -72,7 +80,7 @@ int main() {
     
     read_wav_header("sample.wav");
     int16_t* v=read_pcm_data("sample.wav");
-    for(int i=0;i<100;i++)
+    for(int i=0;i<1000;i++)
     {
         printf("%d\n",*(v+i));
     }
