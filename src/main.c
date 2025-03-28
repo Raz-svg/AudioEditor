@@ -49,7 +49,7 @@ void read_wav_header(const char* filename) {
     printf("Bit Depth: %d-bit\n", header.bitspersample);
     printf("Data Size: %u bytes\n", header.chunksize);
 
-    fclose(file);
+    fclose(file);i
 }
 
 

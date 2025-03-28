@@ -14,6 +14,7 @@ If you have been added as a collaborator, accept the invitation:
 ### 2. Clone the Repository
 Once you have access, clone the repository using one of the following methods:
 
+
 #### Using HTTPS (For Private Repositories, Will Prompt for Username and Password):
 ```bash
 git clone https://github.com/Raz-svg/AudioComposer.git  
