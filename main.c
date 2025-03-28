@@ -67,7 +67,7 @@ int16_t *read_pcm_data(const char* filename) {
     fseek(file, 44, SEEK_SET);// skip the header i.e 44 bytes
 
     // read the data  
-    int16_t* data = (int16_t*)malloc(header.subchunk2size/sizeof(int16_t));
+    int16_t* data = (int16_t*)malloc(header.subchunk2size);
     fread(data, sizeof(int16_t), header.subchunk2size/sizeof(int16_t), file);
 
     // do something with the data
@@ -82,7 +82,7 @@ int main() {
     int16_t* v=read_pcm_data("sample.wav");
     for(int i=0;i<1000;i++)
     {
-        printf("%d\n",*(v+i));
+        printf("%d\n",v[i]);
     }
     
     return 0;
