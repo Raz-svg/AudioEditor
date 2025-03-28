@@ -62,7 +62,7 @@ void read_wav_header(const char* filename) {
 }
 
 // reading raw pcm data
-int16_t *read_pcm_data(const char* filename) {
+int32_t *read_pcm_data(const char* filename) {
     FILE* file = fopen(filename, "rb");
 
     // moves the pointer offset bytes from the origin
@@ -80,8 +80,8 @@ int16_t *read_pcm_data(const char* filename) {
 
 int main() {
     
-    read_wav_header("sample.wav");
-    int16_t* v=read_pcm_data("sample.wav");
+    read_wav_header("sampl.wav");
+    int16_t* v=read_pcm_data("sampl.wav");
     for(int i=0;i<1000;i++)
     {
         printf("%d\n",v[i]);
