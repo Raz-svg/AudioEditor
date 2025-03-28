@@ -25,6 +25,8 @@ typedef struct {
 
 } WAVHeader;
 
+
+// mainly for debugging
 void read_wav_header(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -49,6 +51,9 @@ void read_wav_header(const char* filename) {
 
     fclose(file);
 }
+
+
+
 
 int main() {
     read_wav_header("sample.wav");
