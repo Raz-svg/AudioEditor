@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/raz/Desktop/sound_composer/build",
+  "command": "/usr/bin/gcc -I/home/raz/Desktop/sound_composer/src/audio -isystem /usr/include/SDL2 -g -std=gnu11 -o CMakeFiles/sound_composer.dir/src/core/main.c.o -c /home/raz/Desktop/sound_composer/src/core/main.c",
+  "file": "/home/raz/Desktop/sound_composer/src/core/main.c",
+  "output": "CMakeFiles/sound_composer.dir/src/core/main.c.o"
+},
+{
+  "directory": "/home/raz/Desktop/sound_composer/build",
+  "command": "/usr/bin/gcc -I/home/raz/Desktop/sound_composer/src/audio -isystem /usr/include/SDL2 -g -std=gnu11 -o CMakeFiles/sound_composer.dir/src/audio/util.c.o -c /home/raz/Desktop/sound_composer/src/audio/util.c",
+  "file": "/home/raz/Desktop/sound_composer/src/audio/util.c",
+  "output": "CMakeFiles/sound_composer.dir/src/audio/util.c.o"
+}
+]

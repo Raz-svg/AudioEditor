@@ -19,8 +19,8 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
 }
 
 int main() {
-    const char *filename1 = "/home/raz/Desktop/sound_composer/assets/sample1.wav";
-    const char *filename2 = "/home/raz/Desktop/sound_composer/assets/sample2.wav";
+    const char *filename1 = "../assests/sample1.wav";
+    const char *filename2 = "../assests/sample2.wav";
 
     read_wav_header(filename1);
     int16_t *pcm1 = read_pcm_data(filename1);
