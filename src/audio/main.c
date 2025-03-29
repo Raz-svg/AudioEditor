@@ -98,10 +98,10 @@ struct node *insert(int16_t *data){
 int main() {
 
     // this also for more than 2 wav files
-    read_wav_header("/home/raz/Desktop/sound_composer/assests/sampl.wav");
-    read_wav_header("/home/raz/Desktop/sound_composer/assests/second.wav");
-    int16_t* v=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sampl.wav");
-    int16_t* b=read_pcm_data("/home/raz/Desktop/sound_composer/assests/second.wav");
+    read_wav_header("/home/raz/Desktop/sound_composer/assests/sample1.wav");
+    read_wav_header("/home/raz/Desktop/sound_composer/assests/sample2.wav");
+    int16_t* v=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sample1.wav");
+    int16_t* b=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sample2.wav");
    /* for(int i=0;i<1000;i++)
     *{
     *    printf("%d\n",v[i]);
