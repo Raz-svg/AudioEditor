@@ -8,5 +8,3 @@
 /dataSources.local.xml
 *.exe
 *
-!*/
-main
