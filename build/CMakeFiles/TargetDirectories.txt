@@ -1,0 +1,3 @@
+/home/raz/Desktop/sound_composer/build/CMakeFiles/sound_composer.dir
+/home/raz/Desktop/sound_composer/build/CMakeFiles/edit_cache.dir
+/home/raz/Desktop/sound_composer/build/CMakeFiles/rebuild_cache.dir

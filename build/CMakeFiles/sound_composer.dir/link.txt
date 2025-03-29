@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/sound_composer.dir/src/core/main.c.o CMakeFiles/sound_composer.dir/src/audio/util.c.o -o sound_composer  /usr/lib/x86_64-linux-gnu/libSDL2.so 

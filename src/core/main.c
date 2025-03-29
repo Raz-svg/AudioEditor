@@ -1,148 +1,67 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h> // For fixed-size integers
+#include <SDL2/SDL.h>
+#include "../audio/util.h"
 
-typedef struct {
-    // RIFF Header
-    char chunkid[4];
-    int32_t chunksize;
-    char format[4];
-    // fmt Subchunk
-    char subchunk1id[4];
-    int32_t subchunk1size;
-    int16_t audioformat;
-    int16_t numchannels;// streo = 2, mono = 1
-    int32_t samplerate;
-    int32_t byterate;
-    int16_t blockalign;
-    int16_t bitspersample;
-    // data Subchunk
-    char subchunk2id[4];
-    int32_t subchunk2size; // actual audio data size
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
-} WAVHeader;
+void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
+    int centerY = SCREEN_HEIGHT / 2;
+    int scale = 100; // Scaling factor for better visibility
 
-WAVHeader header;
-
-struct node{
-
-    int16_t *pcm;
-    struct node *next;
-};
-struct node* head=NULL;
-
-// mainly for debugging
-void read_wav_header(const char* filename) {
-    FILE* file = fopen(filename, "rb");
-    if (!file) {
-        printf("Error opening file!\n");
-        return;
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    for (int i = 1; i < num_samples - 1; i++) {
+        int x1 = (i - 1) * SCREEN_WIDTH / num_samples;
+        int y1 = centerY - (pcm[i - 1] / scale);
+        int x2 = i * SCREEN_WIDTH / num_samples;
+        int y2 = centerY - (pcm[i] / scale);
+        SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
     }
-
-    fread(&header, sizeof(WAVHeader), 1, file);
-    
-    if (strncmp(header.chunkid, "RIFF", 4) != 0 || strncmp(header.format, "WAVE", 4) != 0) {
-        printf("Not a valid WAV file!\n");
-        fclose(file);
-        return;
-    }
-
-    printf("Audio Format: %d\n", header.audioformat);// generally pcm is 1
-    printf("Channels: %d\n", header.numchannels);
-    printf("Sample Rate: %d Hz\n", header.samplerate);
-    printf("Bit Depth: %d-bit\n", header.bitspersample);
-    printf("Data Size: %u bytes\n", header.chunksize);
-    printf("subchunlid: %s\n",header.subchunk1id);
-    printf("subchunk1size: %d\n",header.subchunk1size);
-
-    fclose(file);
 }
-
-// reading raw pcm data
-int16_t *read_pcm_data(const char* filename) {
-    FILE* file = fopen(filename, "rb");
-
-    // moves the pointer offset bytes from the origin
-    fseek(file, 44, SEEK_SET);// skip the header i.e 44 bytes
-
-    // read the data  
-    int16_t* data = (int16_t*)malloc(header.subchunk2size);
-    fread(data, sizeof(int16_t), header.subchunk2size/sizeof(int16_t), file);
-
-    // do something with the data
-    fclose(file);
-    return data;
-}
-
-struct node *insert(int16_t *data){
-    struct node *temp=(struct node*)malloc(sizeof(struct node));
-    temp->pcm=data;
-    temp->next=NULL;
-    if(head == NULL){
-        head=temp;
-    }
-    else{
-        struct node* temp1=head;
-        while(temp1->next!=NULL){
-            temp1=temp1->next;
-        }
-        temp1->next=temp;
-
-    }
-    return head;
-
-}
-
 
 int main() {
+    const char *filename1 = "/home/raz/Desktop/sound_composer/assets/sample1.wav";
+    const char *filename2 = "/home/raz/Desktop/sound_composer/assets/sample2.wav";
 
-    // this also for more than 2 wav files
-    read_wav_header("/home/raz/Desktop/sound_composer/assests/sample1.wav");
-    read_wav_header("/home/raz/Desktop/sound_composer/assests/sample2.wav");
-    int16_t* v=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sample1.wav");
-    int16_t* b=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sample2.wav");
-   /* for(int i=0;i<1000;i++)
-    *{
-    *    printf("%d\n",v[i]);
-    *}
-    */
+    read_wav_header(filename1);
+    int16_t *pcm1 = read_pcm_data(filename1);
+    read_wav_header(filename2);
+    int16_t *pcm2 = read_pcm_data(filename2);
 
-    /// need to make for more than two wav files
-    insert(v);
-    insert(b);
+    insert(pcm1);
+    insert(pcm2);
 
-      // Writing to a new file
-      FILE* file = fopen("/home/raz/Desktop/sound_composer/output/connected.wav", "wb");
-      if (file == NULL) {
-          printf("Error creating file\n");
-          return 1;
-      }
-      
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL Initialization Failed: %s\n", SDL_GetError());
+        return 1;
+    }
 
-      // change this ---> for random  size
-      // Update header for new file
-      WAVHeader new_header = header;
-      new_header.subchunk2size *= 2; // Double the data size
-      new_header.chunksize = 36 + new_header.subchunk2size;
-      
-      // Write updated header
-      fwrite(&new_header, sizeof(WAVHeader), 1, file);
-      
-      // Write PCM data from linked list
-      struct node* temp = head;
-      while (temp != NULL) {
-          fwrite(temp->pcm, sizeof(int16_t), header.subchunk2size / sizeof(int16_t), file);
-          temp = temp->next;
-      }
-      
-      fclose(file);
-      printf("WAV files successfully merged into connected.wav\n");
-      
-      return 0;
-    
+    SDL_Window *window = SDL_CreateWindow("Waveform Visualization",
+                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                          SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    int running = 1;
+    SDL_Event event;
 
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT)
+                running = 0;
+        }
 
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        // Draw waveform for the first file
+        if (pcm1) draw_waveform(renderer, pcm1, header.subchunk2size / sizeof(int16_t));
+
+        SDL_RenderPresent(renderer);
+    }
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    free_list();
     return 0;
 }
