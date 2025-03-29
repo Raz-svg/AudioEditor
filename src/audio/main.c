@@ -98,10 +98,10 @@ struct node *insert(int16_t *data){
 int main() {
 
     // this also for more than 2 wav files
-    read_wav_header("sampl.wav");
-    read_wav_header("second.wav");
-    int16_t* v=read_pcm_data("sampl.wav");
-    int16_t* b=read_pcm_data("second.wav");
+    read_wav_header("/home/raz/Desktop/sound_composer/assests/sampl.wav");
+    read_wav_header("/home/raz/Desktop/sound_composer/assests/second.wav");
+    int16_t* v=read_pcm_data("/home/raz/Desktop/sound_composer/assests/sampl.wav");
+    int16_t* b=read_pcm_data("/home/raz/Desktop/sound_composer/assests/second.wav");
    /* for(int i=0;i<1000;i++)
     *{
     *    printf("%d\n",v[i]);
@@ -113,7 +113,7 @@ int main() {
     insert(b);
 
       // Writing to a new file
-      FILE* file = fopen("connected.wav", "wb");
+      FILE* file = fopen("/home/raz/Desktop/sound_composer/output/connected.wav", "wb");
       if (file == NULL) {
           printf("Error creating file\n");
           return 1;
