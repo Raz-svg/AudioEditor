@@ -18,6 +18,8 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     }
 }
 
+void zoom();
+
 int main() {
     const char *filename1 = "../assests/sample1.wav";
     const char *filename2 = "../assests/sample2.wav";
