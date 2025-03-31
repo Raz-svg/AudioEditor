@@ -9,11 +9,11 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     int scale = 100; // Scaling factor for better visibility
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    for (int i = 1; i < num_samples - 1; i++) {
-        int x1 = (i - 1) * SCREEN_WIDTH / num_samples;
-        int y1 = centerY - (pcm[i - 1] / scale);
+    for (int i = 0; i < num_samples ; i++) {
+        int x1 = (i) * SCREEN_WIDTH / num_samples;
+        int y1 = centerY - (pcm[i] / scale);
         int x2 = i * SCREEN_WIDTH / num_samples;
-        int y2 = centerY - (pcm[i] / scale);
+        int y2 = centerY;
         SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
     }
 }
