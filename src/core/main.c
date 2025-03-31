@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <stdint.h>
 #include "../audio/util.h"
 
 #define SCREEN_WIDTH 800
@@ -10,7 +11,7 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     for (int i = 0; i < num_samples ; i++) {
-        int x1 = (i) * SCREEN_WIDTH / num_samples;
+        int x1 = i * SCREEN_WIDTH / num_samples;
         int y1 = centerY - (pcm[i] / scale);
         int x2 = i * SCREEN_WIDTH / num_samples;
         int y2 = centerY;
@@ -18,7 +19,13 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     }
 }
 
-void zoom();
+
+int factor=4;
+// reduce the number of samples rendered that would generate a zoom effect  so ..reduce num_samples by a factor every time zoom is called  in a particular area
+void zoom(int* num_samples){
+
+	*num_samples=(*num_samples)/factor;
+}
 
 int main() {
     const char *filename1 = "../assests/sample1.wav";
@@ -51,9 +58,11 @@ int main() {
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-
+        
+	int samples=header.subchunk2size/sizeof(int16_t);
         // Draw waveform for the first file
-        if (pcm1) draw_waveform(renderer, pcm1, header.subchunk2size / sizeof(int16_t));
+	zoom(&samples);
+        if (pcm1) draw_waveform(renderer, pcm1, samples);
 
         SDL_RenderPresent(renderer);
     }
