@@ -15,7 +15,7 @@ void read_wav_header(const char* filename) {
     if (strncmp(header.chunkid, "RIFF", 4) != 0 || strncmp(header.format, "WAVE", 4) != 0) {
         printf("Not a valid WAV file: %s\n", filename);
         fclose(file);
-        return;
+        return;// Hello
     }
 
     printf("Audio Format: %d\n", header.audioformat);
