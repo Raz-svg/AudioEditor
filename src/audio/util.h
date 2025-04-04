@@ -30,6 +30,7 @@ typedef struct node {
 // Function declarations
 void read_wav_header(const char* filename);
 int16_t* read_pcm_data(const char* filename);
+void write_pcm_data();
 Node* insert(int16_t *data);
 void free_list();
 
