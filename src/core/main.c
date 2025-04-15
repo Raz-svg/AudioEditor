@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include "../audio/util.h"
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     int centerY = SCREEN_HEIGHT / 2;
@@ -27,7 +27,7 @@ int factor = 2;
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
 }
-/*void reverse(filename1)
+void reverse(filename1)
 {
     FILE *input = fopen(filename1, "rb");
     if(input == NULL)
@@ -54,7 +54,7 @@ void zoom(int *num_samples) {
     fclose(input);
     fclose(output);
 
-}*/
+}
 
 
 int main() {
