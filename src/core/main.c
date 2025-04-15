@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include "../audio/util.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 800
 
 void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     int centerY = SCREEN_HEIGHT / 2;
