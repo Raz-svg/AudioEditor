@@ -27,6 +27,35 @@ int factor = 2;
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
 }
+/*void reverse(filename1)
+{
+    FILE *input = fopen(filename1, "rb");
+    if(input == NULL)
+    {
+        printf("Error opening file: %s\n", filename1);
+        return;
+    }
+    FILE *output = fopen(filename1, "wb");
+    if(output == NULL)
+    {
+        printf("Error opening file: %s\n", filename1);
+        return;
+    }
+    fseek(input, 0, SEEK_END);
+    long file_size = ftell(input);
+    while(file_size > sizeof(header))
+    {
+        int16_t numchannels;
+        fseek(input,-8,SEEK_CUR);
+        fread(&numchannels, 4, 1, input);
+        fwrite(&numchannels, 4, 1, output);
+        file_size=file_size- 4;
+    }
+    fclose(input);
+    fclose(output);
+
+}*/
+
 
 int main() {
     const char *filename1 = "../assests/sample1.wav";

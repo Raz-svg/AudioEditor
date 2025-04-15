@@ -48,7 +48,7 @@ int16_t* read_pcm_data(const char* filename) {
     fclose(file);
     return data;
 }
-
+//Enters the PCM data at the end of the singly linked list
 Node* insert(int16_t *data) {
     Node* temp = (Node*)malloc(sizeof(Node));
     temp->pcm = data;
