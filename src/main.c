@@ -1,23 +1,25 @@
-#include <SDL2/SDL.h>
+#include "raylib.h"
 #include <stdint.h>
-#include "../audio/util.h"
+#include "util.c"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
+
+void draw_waveform(int16_t *pcm, int num_samples) {
     int centerY = SCREEN_HEIGHT / 2;
     int scale = 100; // Scaling factor for better visibility
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderDrawLine(renderer,0,centerY,SCREEN_WIDTH,centerY);
+    //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    //SDL_RenderDrawLine(renderer,0,centerY,SCREEN_WIDTH,centerY);
+    DrawLine( 0, centerY, 800,  centerY,BLACK);    
     for (int i = 0; i < num_samples; i++) {
         int x1 = i * SCREEN_WIDTH / num_samples;
         int y1 = centerY - (pcm[i] / scale);
         int x2 = x1;
         int y2 = centerY;
-        SDL_RenderDrawLine(renderer, x1, y1, x2, y2); 
-        SDL_RenderDrawPoint(renderer, x1, y1);
+        DrawLine( x1,y1, x2, y2, BLACK); 
+        DrawPixel( x1,y1,BLACK);
 
     }
 
@@ -27,7 +29,7 @@ int factor = 2;
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
 }
-void reverse(filename1)
+/*void reverse(filename1)
 {
     FILE *input = fopen(filename1, "rb");
     if(input == NULL)
@@ -55,7 +57,7 @@ void reverse(filename1)
     fclose(output);
 
 }
-
+*/
 
 int main() {
     const char *filename1 = "../assests/sample1.wav";
@@ -69,19 +71,36 @@ int main() {
     insert(pcm1);
     insert(pcm2);
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    /*if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL Initialization Failed: %s\n", SDL_GetError());
         return 1;
+    }*/
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Audio Waveform");
+    SetTargetFPS(60);
+
+    int num_samples = header.subchunk2size / sizeof(int16_t);
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        draw_waveform(pcm1, num_samples);
+
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            zoom(&num_samples);
+        }
+
+        EndDrawing();
     }
 
-    SDL_Window *window = SDL_CreateWindow("Waveform Visualization", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    //SDL_Window *window = SDL_CreateWindow("Waveform Visualization", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    //SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    int running = 1;
-    SDL_Event event;
-    int samples = header.subchunk2size / sizeof(int16_t);
+    //int running = 1;
+    //SDL_Event event;
+    //int samples = header.subchunk2size / sizeof(int16_t);
 
-    while (running) {
+    /*while (running) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 running = 0;
@@ -102,7 +121,8 @@ int main() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-
+*/
+    CloseWindow(); 
     free_list();
     return 0;
 }

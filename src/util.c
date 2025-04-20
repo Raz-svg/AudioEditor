@@ -1,6 +1,7 @@
 #include "util.h"
-
 WAVHeader header;
+
+
 Node* head = NULL;
 
 void read_wav_header(const char* filename) {
