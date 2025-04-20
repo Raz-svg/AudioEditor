@@ -76,3 +76,32 @@ void free_list() {
     }
     head = NULL;
 }
+
+void write_pcm_data() {
+    int total_samples = 0;
+    Node* temp = head;
+    while (temp != NULL) {
+        total_samples += header.subchunk2size;
+        temp = temp->next;
+    }
+
+    WAVHeader new_header = header;
+    new_header.subchunk2size = total_samples;
+    new_header.chunksize = 36 + total_samples;
+
+    FILE* file = fopen("output.wav", "wb");
+    if (!file) {
+        printf("Error opening file for writing\n");
+        return;
+    }
+
+    fwrite(&new_header, sizeof(WAVHeader), 1, file);
+
+    temp = head;
+    while (temp != NULL) {
+        fwrite(temp->pcm, sizeof(int16_t), header.subchunk2size / sizeof(int16_t), file);
+        temp = temp->next;
+    }
+
+    fclose(file);
+}
