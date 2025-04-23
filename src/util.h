@@ -22,11 +22,15 @@ typedef struct {
     int32_t subchunk2size;
 } WAVHeader;
 
-typedef struct node {
+typedef struct node{
     int16_t *pcm;
     struct node *next;
 } Node;
 
+typedef struct{
+    Node *head;
+    int16_t *pcm;
+} Track;
 // Function declarations
 void read_wav_header(const char* filename);
 int16_t* read_pcm_data(const char* filename);

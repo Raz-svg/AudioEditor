@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "util.c"
 
+
 #define SCREEN_WIDTH GetScreenWidth()
 #define SCREEN_HEIGHT GetScreenHeight()
 Color softYellow = (Color){255, 255, 153, 100};  // 100 alpha for transparency
@@ -28,6 +29,7 @@ int factor = 2;
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
 }
+
 
 void reverse(const char *input_file, const char *output_file) {
     
@@ -66,17 +68,21 @@ void reverse(const char *input_file, const char *output_file) {
 int main() {
     const char *filename1 = "../assests/sample1.wav";
     const char *filename2 = "../assests/sample2.wav";
+    const char *filename3 = "reversed.wav";
 
     read_wav_header(filename1);
     int16_t *pcm1 = read_pcm_data(filename1);
     read_wav_header(filename2);
     int16_t *pcm2 = read_pcm_data(filename2);
+    read_wav_header(filename1);
+    int16_t *pcm3 = read_pcm_data(filename3);
 
     insert(pcm1);
     insert(pcm2);
+    insert(pcm3);
 
-    write_pcm_data();
-    reverse(filename1, "reversed_output.wav");
+    write_pcm_data("output.wav");
+    reverse("../output/connected.wav", "reversed.wav");
 
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);

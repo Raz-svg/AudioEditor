@@ -19,13 +19,13 @@ void read_wav_header(const char* filename) {
         return;// Hello
     }
 
-    printf("Audio Format: %d\n", header.audioformat);
+   /* printf("Audio Format: %d\n", header.audioformat);
     printf("Channels: %d\n", header.numchannels);
     printf("Sample Rate: %d Hz\n", header.samplerate);
     printf("Bit Depth: %d-bit\n", header.bitspersample);
     printf("Data Size: %u bytes\n", header.chunksize);
     printf("Subchunk ID: %s\n", header.subchunk1id);
-    printf("Subchunk1 Size: %d\n", header.subchunk1size);
+    printf("Subchunk1 Size: %d\n", header.subchunk1size);*/
 
     fclose(file);
 }
@@ -77,7 +77,7 @@ void free_list() {
     head = NULL;
 }
 
-void write_pcm_data() {
+void write_pcm_data(char* filename) {
     int total_samples = 0;
     Node* temp = head;
     while (temp != NULL) {
@@ -89,7 +89,7 @@ void write_pcm_data() {
     new_header.subchunk2size = total_samples;
     new_header.chunksize = 36 + total_samples;
 
-    FILE* file = fopen("output.wav", "wb");
+    FILE* file = fopen(filename, "wb");
     if (!file) {
         printf("Error opening file for writing\n");
         return;
