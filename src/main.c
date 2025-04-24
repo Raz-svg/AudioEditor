@@ -201,6 +201,7 @@ int main() {
                     currentScreen = Load;
     
                  }
+
                break;
             case Static:
                
@@ -210,7 +211,9 @@ int main() {
                  else if (IsKeyPressed(KEY_SPACE)) {
                      currentScreen = Load;
     
-             }
+                }
+
+
                 break;
                 default:
                 break;
@@ -245,23 +248,27 @@ int main() {
                 
                  } 
                  else {
-                    DrawRectangle(0, 0, 200, SCREEN_HEIGHT, Fade(DARKGRAY, 0.5f));
+                    DrawRectangle(0, 0, 300, SCREEN_HEIGHT, Fade(DARKGRAY, 0.5f));
                     DrawText("Dropped files:", 10, 40, 20, BLACK);
                     for (int i = 0; i < filePathCounter; i++) 
                     {
                     if (i % 2 == 0)
-                        DrawRectangle(0, 85 + 40 * i, 200, 40, Fade(LIGHTGRAY, 0.5f));
+                        DrawRectangle(0, 85 + 40 * i, 300, 40, Fade(LIGHTGRAY, 0.5f));
                     else
-                        DrawRectangle(0, 85 + 40 * i, 200, 40, Fade(LIGHTGRAY, 0.3f));
+                        DrawRectangle(0, 85 + 40 * i, 300, 40, Fade(LIGHTGRAY, 0.3f));
     
                     DrawText(filePaths[i], 10, 95 + 40 * i, 10, DARKGRAY);
-    
-                    read_wav_header(filePaths[i]);
-                    int num_samples = header.subchunk2size / sizeof(int16_t);
-                    draw_waveform(filePaths[i], num_samples);
+                    
+                    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), (Rectangle){0, 85 + 40 * i, 300, 40})) {
+                        
+                        read_wav_header(filePaths[i]);
+
+                        int num_samples = header.subchunk2size / sizeof(int16_t);
+                        draw_waveform(filePaths[i], num_samples);
+                    }
                  }
     
-                 DrawText("Drop new files...", 10, 110 + 40 * filePathCounter, 20, WHITE);
+                // DrawText("Drop new files...", 10, 110 + 40 * filePathCounter, 20, WHITE);
                  }
     
                   break;

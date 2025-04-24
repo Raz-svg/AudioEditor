@@ -1,8 +1,4 @@
 #include "util.h"
-<<<<<<< HEAD
-
-WAVHeader header;
-=======
 WAVHeader header;
 
 #define MAX_FILEPATH_RECORDED   4096
@@ -12,7 +8,6 @@ WAVHeader header;
 
 Color softYellow = (Color){255, 255, 153, 100};  
 int factor = 2;
->>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
 Node* head = NULL;
 
 void read_wav_header(const char* filename) {
@@ -30,21 +25,15 @@ void read_wav_header(const char* filename) {
         return;// Hello
     }
 
-<<<<<<< HEAD
     printf("Audio Format: %d\n", header.audioformat);
-=======
    /* printf("Audio Format: %d\n", header.audioformat);
->>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
     printf("Channels: %d\n", header.numchannels);
     printf("Sample Rate: %d Hz\n", header.samplerate);
     printf("Bit Depth: %d-bit\n", header.bitspersample);
     printf("Data Size: %u bytes\n", header.chunksize);
     printf("Subchunk ID: %s\n", header.subchunk1id);
-<<<<<<< HEAD
     printf("Subchunk1 Size: %d\n", header.subchunk1size);
-=======
     printf("Subchunk1 Size: %d\n", header.subchunk1size);*/
->>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
 
     fclose(file);
 }
@@ -95,8 +84,6 @@ void free_list() {
     }
     head = NULL;
 }
-<<<<<<< HEAD
-=======
 
 void write_pcm_data(char* filename) {
     int total_samples = 0;
@@ -180,4 +167,3 @@ void draw_waveform(const char *filepath, int num_samples) {
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
 }
->>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
