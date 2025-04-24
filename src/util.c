@@ -3,8 +3,8 @@ WAVHeader header;
 
 #define MAX_FILEPATH_RECORDED   4096
 #define MAX_FILEPATH_SIZE       2048
-#define SCREEN_WIDTH GetScreenWidth()
-#define SCREEN_HEIGHT GetScreenHeight()
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 800
 
 Color softYellow = (Color){255, 255, 153, 100};  
 int factor = 2;

@@ -39,7 +39,13 @@ typedef struct {
     Vector2 offset;
     Color color;
 } DraggableBox;
-// Function declarations
+
+typedef enum{
+    Load=0,
+    Real,
+    Static,
+}Screen;
+
 void read_wav_header(const char* filename);
 
 int16_t* read_pcm_data(const char* filename);
