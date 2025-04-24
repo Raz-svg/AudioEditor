@@ -1,11 +1,11 @@
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
 #include <stdint.h>
-#include "../audio/util.h"
+#include "util.c"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
+/*void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
     int centerY = SCREEN_HEIGHT / 2;
     int scale = 100; // Scaling factor for better visibility
 
@@ -26,8 +26,8 @@ void draw_waveform(SDL_Renderer *renderer, int16_t *pcm, int num_samples) {
 int factor = 2;
 void zoom(int *num_samples) {
     *num_samples = (*num_samples) / factor;
-}
-void reverse(filename1)
+}*/
+/*void reverse(const char *filename1)
 {
     FILE *input = fopen(filename1, "rb");
     if(input == NULL)
@@ -54,6 +54,43 @@ void reverse(filename1)
     fclose(input);
     fclose(output);
 
+}*/
+void reverse(const char* input_filename, const char* output_filename) {
+    FILE *input = fopen(input_filename, "rb");
+    if (input == NULL) {
+        printf("Error opening input file: %s\n", input_filename);
+        return;
+    }
+
+    FILE *output = fopen(output_filename, "wb");
+    if (output == NULL) {
+        printf("Error opening output file: %s\n", output_filename);
+        fclose(input);
+        return;
+    }
+
+    // Copy the header (first 44 bytes) from input to output
+    uint8_t header[44];
+    fread(header, sizeof(uint8_t), 44, input);
+    fwrite(header, sizeof(uint8_t), 44, output);
+
+    // Determine the size of the PCM data
+    fseek(input, 0, SEEK_END);
+    long file_size = ftell(input);
+    long pcm_data_size = file_size - 44; // Exclude the header
+    fseek(input, 44, SEEK_SET); // Move to the start of the PCM data
+
+    // Reverse the PCM data
+    int16_t sample;
+    long num_samples = pcm_data_size / sizeof(int16_t);
+    for (long i = num_samples - 1; i >= 0; i--) {
+        fseek(input, 44 + i * sizeof(int16_t), SEEK_SET);
+        fread(&sample, sizeof(int16_t), 1, input);
+        fwrite(&sample, sizeof(int16_t), 1, output);
+    }
+
+    fclose(input);
+    fclose(output);
 }
 
 
@@ -66,10 +103,10 @@ int main() {
     read_wav_header(filename2);
     int16_t *pcm2 = read_pcm_data(filename2);
 
-    insert(pcm1);
-    insert(pcm2);
+    //insert(pcm1);
+    //insert(pcm2);
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    /*if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL Initialization Failed: %s\n", SDL_GetError());
         return 1;
     }
@@ -102,8 +139,8 @@ int main() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-
-    free_list();
-    return 0;
+    */
+   reverse(filename1,filename2);
+   return 0;
 }
 

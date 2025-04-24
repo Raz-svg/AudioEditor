@@ -33,7 +33,7 @@ int16_t* read_pcm_data(const char* filename);
 void write_pcm_data();
 Node* insert(int16_t *data);
 void free_list();
-
+void reverse(filename1);
 extern WAVHeader header;
 extern Node* head;
 
