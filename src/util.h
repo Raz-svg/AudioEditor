@@ -56,9 +56,6 @@ Node* insert(int16_t *data);
 void write_pcm_data();
 
 void free_list();
-<<<<<<< HEAD
-void reverse(filename1);
-=======
 
 void reverse(const char *input_file, const char *output_file);
 
@@ -66,7 +63,6 @@ void draw_waveform(const char *filepath, int num_samples) ;
 
 void zoom(int *num_samples) ;
 
->>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
 extern WAVHeader header;
 extern Node* head;
 
