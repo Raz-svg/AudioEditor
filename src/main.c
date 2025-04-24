@@ -22,6 +22,8 @@ int main() {
     }
 
     while (!WindowShouldClose()) {
+        butterworth_low_filter("/home/lightning-beast5/AudioComposer/assests/sample1.wav", "low.wav");
+        
         if (IsFileDropped()) {
             FilePathList droppedFiles = LoadDroppedFiles();
             for (int i = 0; i < (int)droppedFiles.count; i++) {
