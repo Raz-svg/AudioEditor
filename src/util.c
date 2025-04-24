@@ -3,8 +3,8 @@ WAVHeader header;
 
 #define MAX_FILEPATH_RECORDED   4096
 #define MAX_FILEPATH_SIZE       2048
-#define SCREEN_WIDTH 1200
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 1000
 
 Color softYellow = (Color){255, 255, 153, 100};  
 int factor = 2;
@@ -145,14 +145,14 @@ void draw_waveform(const char *filepath, int num_samples) {
     int centerY = (SCREEN_HEIGHT / 2);
     int scale = 100;
 
-    DrawLine(0, centerY, SCREEN_WIDTH, centerY, BLACK);    
+    DrawLine(200, centerY, SCREEN_WIDTH, centerY, BLACK);    
 
     read_wav_header(filepath);
     int16_t *pcm = read_pcm_data(filepath);
     if (!pcm) return;
 
     for (int i = 0; i < num_samples; i++) {
-        int x1 = i * SCREEN_WIDTH / num_samples;
+        int x1 = i * SCREEN_WIDTH / num_samples+200;
         int y1 = centerY - (pcm[i] / scale);
         int x2 = x1;
         int y2 = centerY;

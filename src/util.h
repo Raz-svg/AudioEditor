@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include<math.h>
 #include "raylib.h"
 
 typedef struct {
