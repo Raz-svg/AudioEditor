@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include<math.h>
+#include "raylib.h"
 
 typedef struct {
     char chunkid[4];
@@ -22,18 +24,49 @@ typedef struct {
     int32_t subchunk2size;
 } WAVHeader;
 
-typedef struct node {
+typedef struct node{
     int16_t *pcm;
     struct node *next;
 } Node;
 
-// Function declarations
+typedef struct{
+    Node *head;
+    int16_t *pcm;
+} Track;
+
+typedef struct {
+    Rectangle rect;
+    bool dragging;
+    Vector2 offset;
+    Color color;
+} DraggableBox;
+
+typedef enum{
+    Load=0,
+    Real,
+    Static,
+}Screen;
+
 void read_wav_header(const char* filename);
+
 int16_t* read_pcm_data(const char* filename);
-void write_pcm_data();
+
 Node* insert(int16_t *data);
+
+void write_pcm_data();
+
 void free_list();
+<<<<<<< HEAD
 void reverse(filename1);
+=======
+
+void reverse(const char *input_file, const char *output_file);
+
+void draw_waveform(const char *filepath, int num_samples) ;
+
+void zoom(int *num_samples) ;
+
+>>>>>>> d2a800c592f43e3d7ec5ac83638202a9978c2ac1
 extern WAVHeader header;
 extern Node* head;
 
