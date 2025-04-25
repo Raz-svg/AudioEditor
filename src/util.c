@@ -147,14 +147,14 @@ void draw_waveform(const char *filepath, int num_samples) {
     int centerY = (SCREEN_HEIGHT / 2);
     int scale = 100;
 
-    DrawLine(200, centerY, SCREEN_WIDTH, centerY, BLACK);    
+    DrawLine(350, centerY, SCREEN_WIDTH, centerY, BLACK);    
 
     read_wav_header(filepath);
     int16_t *pcm = read_pcm_data(filepath);
     if (!pcm) return;
 
     for (int i = 0; i < num_samples; i++) {
-        int x1 = i * SCREEN_WIDTH / num_samples+200;
+        int x1 = i * SCREEN_WIDTH / num_samples+350;
         int y1 = centerY - (pcm[i] / scale);
         int x2 = x1;
         int y2 = centerY;
@@ -206,6 +206,7 @@ void low_filter(const char *input_file, const char *output_file2)
     free(filtered_data);
     free(data);
 }   
+
 void butterworth_low_filter(const char *input_file, const char *output_file) {
     read_wav_header(input_file);
     int16_t *data = read_pcm_data(input_file);
