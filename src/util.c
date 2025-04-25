@@ -7,6 +7,7 @@ WAVHeader header;
 #define SCREEN_HEIGHT 1000
 
 Color softYellow = (Color){255, 255, 153, 100};  
+Color softgray = (Color){30, 34, 42, 100};
 int factor = 2;
 Node* head = NULL;
 
@@ -147,14 +148,14 @@ void draw_waveform(const char *filepath, int num_samples) {
     int centerY = (SCREEN_HEIGHT / 2);
     int scale = 100;
 
-    DrawLine(350, centerY, SCREEN_WIDTH, centerY, BLACK);    
+    DrawLine(400, centerY, SCREEN_WIDTH, centerY, BLACK);    
 
     read_wav_header(filepath);
     int16_t *pcm = read_pcm_data(filepath);
     if (!pcm) return;
 
     for (int i = 0; i < num_samples; i++) {
-        int x1 = i * SCREEN_WIDTH / num_samples+350;
+        int x1 = i * SCREEN_WIDTH / num_samples+400;
         int y1 = centerY - (pcm[i] / scale);
         int x2 = x1;
         int y2 = centerY;
