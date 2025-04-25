@@ -249,5 +249,124 @@ void butterworth_low_filter(const char *input_file, const char *output_file) {
     free(filtered_data);
     free(data);
 }
-    
+void butterworth_filter_3rd_order(const char *input_file, const char *output_file) {
+    read_wav_header(input_file);
+    int16_t *data = read_pcm_data(input_file);
+    if (!data) return;
+    int num_samples = header.subchunk2size / sizeof(int16_t);
+    int16_t *filtered_data = (int16_t*)malloc(header.subchunk2size);
+    if (!filtered_data) {
+        printf("Memory allocation failed for filtered data!\n");
+        free(data);
+        return;
+    }
+    // First order section coefficients
+    const float a0_1 = 0.0675f;
+    const float a1_1 = 0.0675f;
+    const float b1_1 = -0.8650f;
+    // Second order section coefficients
+    const float a0_2 = 0.0088f;
+    const float a1_2 = 0.0176f;
+    const float a2_2 = 0.0088f;
+    const float b1_2 = -1.7347f;
+    const float b2_2 = 0.7699f;
+    // Delay buffers
+    float x1_1 = 0, y1_1 = 0;                    // First order section
+    float x1_2 = 0, x2_2 = 0, y1_2 = 0, y2_2 = 0;  // Second order section
+    // Apply cascaded filters
+    for (int i = 0; i < num_samples; i++) {
+        // First order section
+        float x0_1 = (float)data[i];
+        float y0_1 = a0_1 * x0_1 + a1_1 * x1_1 - b1_1 * y1_1;
+        // Update first order delays
+        x1_1 = x0_1;
+        y1_1 = y0_1;
+        // Second order section
+        float x0_2 = y0_1;  // Input is output from first section
+        float y0_2 = a0_2 * x0_2 + a1_2 * x1_2 + a2_2 * x2_2 - b1_2 * y1_2 - b2_2 * y2_2;
+        // Update second order delays
+        x2_2 = x1_2;
+        x1_2 = x0_2;
+        y2_2 = y1_2;
+        y1_2 = y0_2;
+        // Scale and store the final output
+        filtered_data[i] = (int16_t)(y0_2 * 0.85f);  // Scaling factor
+    }
+    // Write filtered data to output file
+    FILE *out = fopen(output_file, "wb");
+    if (!out) {
+        printf("Error opening output file: %s\n", output_file);
+        free(data);
+        free(filtered_data);
+        return;
+    }
+    fwrite(&header, sizeof(WAVHeader), 1, out);
+    fwrite(filtered_data, sizeof(int16_t), num_samples, out);
+    fclose(out);
+    free(filtered_data);
+    free(data);
+}
+void butterworth_filter_4th_order(const char *input_file, const char *output_file) {
+    read_wav_header(input_file);
+    int16_t *data = read_pcm_data(input_file);
+    if (!data) return;
+
+    int num_samples = header.subchunk2size / sizeof(int16_t);
+    int16_t *filtered_data = (int16_t*)malloc(header.subchunk2size);
+    if (!filtered_data) {
+        printf("Memory allocation failed for filtered data!\n");
+        free(data);
+        return;
+    }
+    // First section
+    const float a0_1 = 0.0048f;
+    const float a1_1 = 0.0096f;
+    const float a2_1 = 0.0048f;
+    const float b1_1 = -1.8904f;
+    const float b2_1 = 0.8096f;
+    // Second section
+    const float a0_2 = 1.0f;
+    const float a1_2 = 2.0f;
+    const float a2_2 = 1.0f;
+    const float b1_2 = -1.9159f;
+    const float b2_2 = 0.9355f;
+    // Delay buffers for both sections
+    float x1_1 = 0, x2_1 = 0, y1_1 = 0, y2_1 = 0;  // First section
+    float x1_2 = 0, x2_2 = 0, y1_2 = 0, y2_2 = 0;  // Second section
+    // Apply cascaded filters
+    for (int i = 0; i < num_samples; i++) {
+        // First section
+        float x0_1 = (float)data[i];
+        float y0_1 = a0_1*x0_1 + a1_1*x1_1 + a2_1*x2_1 - b1_1*y1_1 - b2_1*y2_1;
+        // Update first section delays
+        x2_1 = x1_1;
+        x1_1 = x0_1;
+        y2_1 = y1_1;
+        y1_1 = y0_1;
+        // Second section
+        float x0_2 = y0_1;  // Input is output from first section
+        float y0_2 = a0_2*x0_2 + a1_2*x1_2 + a2_2*x2_2 - b1_2*y1_2 - b2_2*y2_2;
+        // Update second section delays
+        x2_2 = x1_2;
+        x1_2 = x0_2;
+        y2_2 = y1_2;
+        y1_2 = y0_2;
+        // Scale and store the final output
+        filtered_data[i] = (int16_t)(y0_2 * 0.0001f);  // Scaling factor to prevent overflow
+    }
+    // Write filtered data to output file
+    FILE *out = fopen(output_file, "wb");
+    if (!out) {
+        printf("Error opening output file: %s\n", output_file);
+        free(data);
+        free(filtered_data);
+        return;
+    }
+    fwrite(&header, sizeof(WAVHeader), 1, out);
+    fwrite(filtered_data, sizeof(int16_t), num_samples, out);
+    fclose(out);
+    free(filtered_data);
+    free(data);
+}
+
     
