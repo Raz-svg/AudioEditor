@@ -33,7 +33,7 @@ int main() {
     Vector2 buttonCenter = { buttonX + texture1.width / 2.0f, buttonY + texture1.height / 2.0f };
     float buttonRadius = texture1.width / 2.0f + 90.0f ;
 
-    Rectangle dropBounds = { 0, 30, (float)texture3.width, (float)texture3.height };
+    Rectangle dropBounds = { 0, 0, (float)texture3.width, (float)texture3.height };
 
     bool isActiverec = false;
     bool isActivedrop = false;
