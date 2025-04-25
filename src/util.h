@@ -64,6 +64,8 @@ void draw_waveform(const char *filepath, int num_samples) ;
 void zoom(int *num_samples) ;
 void low_filter(const char *input_file, const char *output_file2);
 void butterworth_low_filter(const char *input_file, const char *output_file);
+void butterworth_filter_4th_order(const char *input_file, const char *output_file);
+void butterworth_filter_3rd_order(const char *input_file, const char *output_file);
 
 extern WAVHeader header;
 extern Node* head;

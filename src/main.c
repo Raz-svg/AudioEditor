@@ -23,7 +23,7 @@ int main() {
     if (drop.data == NULL) { TraceLog(LOG_WARNING, "Failed to load drop image"); }
     Texture2D texture2 = LoadTextureFromImage(drop);
 
-    Image dockfile=LoadImage("/home/raz/Desktop/sound_composer/src/Group 1 (7).png");
+    Image dockfile=LoadImage("/home/lightning-beast5/AudioComposer/src/Group 1 (7).png");
     if (dockfile.data == NULL) { TraceLog(LOG_WARNING, "Failed to load dockfile image"); return 1; }
     Texture2D texture3 = LoadTextureFromImage(dockfile);
 
@@ -57,6 +57,7 @@ int main() {
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
+        butterworth_filter_3rd_order("/home/lightning-beast5/AudioComposer/assests/sample1.wav","low_3.wav");
 
         if (IsFileDropped()) {
             FilePathList droppedFiles = LoadDroppedFiles();
