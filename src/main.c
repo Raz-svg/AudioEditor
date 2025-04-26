@@ -1,6 +1,12 @@
-#include "util.c" 
+#include "util.h"     // Include your header first // Include recorder header
+#include "raylib.h"
+#include <stdio.h>
+#include <stdbool.h> // For bool type
+
 #define MAX_FILEPATH_RECORDED   4096
 #define MAX_FILEPATH_SIZE       2048
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 1000
 
 int selectedFileIndex = -1;
 
@@ -8,7 +14,10 @@ int reverse_count = 0;
 int lowpass_count = 0;
 int merge_count = 0;
 
-int main() {
+
+
+
+int main(int argc, char *argv[]) {
 
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Audio Waveform");
@@ -127,15 +136,15 @@ int main() {
                  {
                    isActiverec = !isActiverec;
 
-                   /* if (isActiverec) {
-                          StartAudioRecording("real_time_recording.wav");
+                    if (isActiverec) {
+                          StartAudioRecording();
                           TraceLog(LOG_INFO, "Started recording...");
                      } else {
 
                          StopAudioRecording();
                          TraceLog(LOG_INFO, "Stopped recording.");
                           // TODO: Process the recorded audio (load from file or memory)
-                        }*/
+                        }
                      }
 
                break;
@@ -291,7 +300,7 @@ int main() {
             case Static:
             {
             
-               
+                Color softgray = (Color){30, 34, 42, 100};
                 Rectangle dock = { 0, 0, 50, (float)SCREEN_HEIGHT };
                 DrawRectangleRec(dock, Fade(softgray, 0.5f));
 

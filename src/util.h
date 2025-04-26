@@ -1,12 +1,15 @@
 #ifndef WAV_UTILS_H
 #define WAV_UTILS_H
 
+// Include raylib.h BEFORE using Color
+#include "raylib.h"
+#include "miniaudio.h" // Keep other includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include<math.h>
-#include "raylib.h"
+
 
 typedef struct {
     char chunkid[4];
@@ -67,7 +70,11 @@ void butterworth_low_filter(const char *input_file, const char *output_file);
 void butterworth_filter_4th_order(const char *input_file, const char *output_file);
 void butterworth_filter_3rd_order(const char *input_file, const char *output_file);
 
+void StartAudioRecording(void);
+void StopAudioRecording(void);
+
+void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
 extern WAVHeader header;
 extern Node* head;
 
-#endif  
+#endif
