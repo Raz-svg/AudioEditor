@@ -154,84 +154,51 @@ void reverse(const char *input_file, const char *output_file) {
 
 void draw_waveform(const char *filepath, int num_samples) {
 
-    // int centerY = (SCREEN_HEIGHT / 2); // SCREEN_HEIGHT is now defined via util.h
-    // int scale = 100;
-
-    // DrawLine(400, centerY, SCREEN_WIDTH, centerY, BLACK); // SCREEN_WIDTH is now defined via util.h
-
-    // read_wav_header(filepath);
-    // int16_t *pcm = read_pcm_data(filepath);
-    // if (!pcm) return;
-
-    // for (int i = 0; i < num_samples; i++) {
-    //     int x1 = i * SCREEN_WIDTH / num_samples+400;
-    //     int y1 = centerY - (pcm[i] / scale);
-    //     int x2 = x1;
-    //     int y2 = centerY;
-    //     DrawLine(x1, y1, x2, y2, softYellow); // softYellow is now correctly typed
-    // }
-
-    // free(pcm);
-     int centerY = (SCREEN_HEIGHT / 2);
+    int centerY = (SCREEN_HEIGHT / 2);
     int scale = 100;
 
     DrawLine(400, centerY, SCREEN_WIDTH, centerY, BLACK);
 
-    // Assuming read_wav_header and read_pcm_data are correctly defined elsewhere
-    // and header is populated correctly by read_wav_header.
-    // Make sure read_wav_header is called before read_pcm_data if needed.
-    // read_wav_header(filepath); // Call if necessary, ensure it returns bool or handle errors
-    int16_t *pcm = read_pcm_data(filepath); // Ensure this function handles errors
+    int16_t *pcm = read_pcm_data(filepath); 
     if (!pcm) {
         printf("Failed to read PCM data for waveform drawing.\n");
         return;
     }
 
-    // Ensure header.subchunk2size is valid before calculating total_pcm_samples
     if (header.subchunk2size <= 0 || header.bitspersample <= 0) {
          printf("Invalid WAV header data for waveform drawing.\n");
          free(pcm);
          return;
     }
     int bytes_per_sample = header.bitspersample / 8;
-    if (bytes_per_sample <= 0) bytes_per_sample = 2; // Default to 2 for int16_t if needed
+    if (bytes_per_sample <= 0) bytes_per_sample = 2; 
     int total_pcm_samples = header.subchunk2size / bytes_per_sample;
 
-
-    // Ensure num_samples is not greater than available PCM data and not zero
     if (num_samples <= 0 || num_samples > total_pcm_samples) {
-        num_samples = total_pcm_samples; // Draw all samples if requested num is invalid
+        num_samples = total_pcm_samples; 
     }
-     if (num_samples <= 0) { // Still possible if total_pcm_samples was 0
+     if (num_samples <= 0) { 
          printf("No samples to draw.\n");
          free(pcm);
          return;
      }
 
 
-    int waveform_width = SCREEN_WIDTH - 400; // Width available for waveform
+    int waveform_width = SCREEN_WIDTH - 400; 
 
     for (int i = 0; i < waveform_width; i++) {
-        // Map screen pixel 'i' to a sample index in the pcm data
-        // This samples the waveform across the available width
+        
         int sample_index = (int)(((float)i / waveform_width) * num_samples);
 
-        // Ensure sample_index is within bounds (important due to potential float inaccuracies)
          if (sample_index >= total_pcm_samples) sample_index = total_pcm_samples - 1;
          if (sample_index < 0) sample_index = 0;
 
 
-        int x = 400 + i; // X position on screen
-        // Scale PCM value to fit vertically; adjust 'scale' as needed
-        // Ensure pcm[sample_index] is accessed safely
+        int x = 400 + i;
         int y = centerY - (pcm[sample_index] / scale);
-
-        // Clamp y to screen bounds if necessary, or adjust scale
         if (y < 0) y = 0;
         if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
 
-
-        // Draw a vertical line for each point for a simple waveform view
         DrawLine(x, centerY, x, y, softYellow);
     }
 
@@ -541,7 +508,7 @@ void StopAudioRecording()
         fclose(raw);
         fclose(wav);
 
-        remove("real_time_recording.raw"); // delete the temporary raw file
+        remove("real_time_recording.raw"); 
     }
 }
 
