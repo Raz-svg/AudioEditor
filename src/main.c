@@ -10,7 +10,7 @@
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 1000
 
-// Global variables from original code
+
 int selectedFileIndex = -1;
 int reverse_count = 0;
 int lowpass_count = 0;
@@ -59,22 +59,22 @@ int main(int argc, char *argv[]) {
     UnloadImage(reversefile);
 
     // Filter level images
-    Image level1=LoadImage("Group 1 (11).png");
+    Image level1=LoadImage("Group 1 (17).png");
     if(level1.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level1 image"); CloseWindow(); return 1; }
     Texture2D texture7 = LoadTextureFromImage(level1);
     UnloadImage(level1);
 
-    Image level2=LoadImage("Group 1 (15).png");
+    Image level2=LoadImage("Group 3 (2).png");
     if(level2.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level2 image"); CloseWindow(); return 1; }
     Texture2D texture8 = LoadTextureFromImage(level2);
     UnloadImage(level2);
 
-    Image level3=LoadImage("Group 1 (13).png");
+    Image level3=LoadImage("Group 6.png");
     if(level3.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level3 image"); CloseWindow(); return 1; }
     Texture2D texture9 = LoadTextureFromImage(level3);
     UnloadImage(level3);
 
-    Image level4=LoadImage("Group 1 (16).png");
+    Image level4=LoadImage("Group 5.png");
     if(level4.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level4 image"); CloseWindow(); return 1; }
     Texture2D texture10 = LoadTextureFromImage(level4);
     UnloadImage(level4);
@@ -101,10 +101,10 @@ int main(int argc, char *argv[]) {
 
     Rectangle reversefileBounds = { (dock_width - (float)texture6.width) / 2.0f, current_y_offset, (float)texture6.width, (float)texture6.height };
 
-    Rectangle level1Bounds = { (SCREEN_WIDTH/2.0f) - 300 - texture7.width/2.0f+150, 250, (float)texture7.width, (float)texture7.height };
-    Rectangle level2Bounds = { (SCREEN_WIDTH/2.0f) + 300 - texture8.width/2.0f+150, 250, (float)texture8.width, (float)texture8.height };
-    Rectangle level3Bounds = { (SCREEN_WIDTH/2.0f) - 300 - texture9.width/2.0f+150, 600, (float)texture9.width, (float)texture9.height };
-    Rectangle level4Bounds = { (SCREEN_WIDTH/2.0f) + 300 - texture10.width/2.0f+150, 600, (float)texture10.width, (float)texture10.height };
+    Rectangle level1Bounds = { (SCREEN_WIDTH/2.0f) - 300 - texture7.width/2.0f+50, 250, (float)texture7.width, (float)texture7.height };
+    Rectangle level2Bounds = { (SCREEN_WIDTH/2.0f) + 300 - texture8.width/2.0f+50, 250, (float)texture8.width, (float)texture8.height };
+    Rectangle level3Bounds = { (SCREEN_WIDTH/2.0f) - 300 - texture9.width/2.0f+50, 600, (float)texture9.width, (float)texture9.height };
+    Rectangle level4Bounds = { (SCREEN_WIDTH/2.0f) + 300 - texture10.width/2.0f+50, 600, (float)texture10.width, (float)texture10.height };
     
 
     bool isActiverec = false;
