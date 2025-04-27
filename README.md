@@ -25,10 +25,11 @@ A foundational C project demonstrating audio manipulation, visualization, and re
 
 `AUDIO_EDITOR` provides a basic framework for interacting with WAV audio files. It allows reading audio data, applying simple effects like reversing or filtering, visualizing waveforms, and performing basic audio recording. The integration of raylib enables graphical representation and potential UI interactions, while miniaudio handles cross-platform audio playback and recording tasks efficiently.
 
+---
+
 ![Real](assests/Screenshot from 2025-04-27 08-20-31.png)
 ![Static_window](assests/Screenshot from 2025-04-27 08-22-24.png)
 ![Static](assests/Screenshot from 2025-04-27 08-22-32.png)
----
 
 ## Key Features
 
