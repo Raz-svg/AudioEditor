@@ -1,143 +1,165 @@
-# 🎶 SOUND_COMPOSER
+# 🎶 AUDIO_EDITOR
 
-A simple C project for managing and visualizing sound and image assets using [raylib](https://www.raylib.com/) and [miniaudio](https://github.com/mackron/miniaudio).  
-This project sets the foundation for building a **basic sound composer** or audio visualization tool.
+A foundational C project demonstrating audio manipulation, visualization, and recording capabilities using the [raylib](https://www.raylib.com/) library for graphics and UI, and the [miniaudio](https://github.com/mackron/miniaudio) library for audio I/O. This project serves as a starting point for developing simple audio editing tools, sound composers, or audio visualizers.
 
 ---
 
-## 📂 Project Structure
+## Table of Contents
 
-```plaintext
-SOUND_COMPOSER/
-├── assets/            # Images and audio files
-│   ├── Group 1 (1).png
-│   ├── Group 2 (1).png
-│   ├── Group 3 (1).png
-│   ├── Group 5.png
-│   ├── sample1.wav
-│   └── sample2.wav
-├── docs/               # (Optional) Project documentation
-├── output/             # (Optional) Output files
-├── src/                # Source code
-│   ├── build/          # Compiled executables and object files
-│   ├── main.c          # Main application logic
-│   ├── util.c          # Utility functions
-│   ├── util.h          # Utility function headers
-│   ├── miniaudio.h     # Embedded audio library (single header)
-│   └── Makefile        # Makefile for building the project
-├── .vscode/            # VSCode project settings (optional)
-├── .idea/              # JetBrains IDE settings (optional)
-├── .cache/             # Build cache (optional)
-├── README.md           # Project documentation (this file)
+* [Overview](#overview)
+* [Key Features](#key-features)
+* [Dependencies](#dependencies)
+* [Prerequisites](#prerequisites)
+* [Building the Project](#building-the-project)
+* [Usage](#usage)
+* [Code Structure](#code-structure)
+    * [Data Structures](#data-structures)
+    * [Core Functionality](#core-functionality)
+* [Contributing](#contributing)
+* [License](#license)
+* [Acknowledgments](#acknowledgments)
 
-```
-## Features
+---
 
-* Read WAV file headers and PCM data.
-* Write PCM data (implementation details needed).
-* Reverse audio data.
-* Apply various low-pass filters (simple, Butterworth 3rd & 4th order).
-* Visualize audio waveforms using raylib.
-* Zoom functionality for waveform display.
-* Basic audio recording using miniaudio.
-* Data structures for managing audio tracks and UI elements.
+## Overview
+
+`AUDIO_EDITOR` provides a basic framework for interacting with WAV audio files. It allows reading audio data, applying simple effects like reversing or filtering, visualizing waveforms, and performing basic audio recording. The integration of raylib enables graphical representation and potential UI interactions, while miniaudio handles cross-platform audio playback and recording tasks efficiently.
+
+---
+
+## Key Features
+
+* **WAV File Handling:**
+    * Reads WAV file headers and PCM data according to standard specifications.
+    * Includes functionality stub for writing PCM data back to a file (requires further implementation).
+* **Audio Manipulation & Effects:**
+    * Reverses audio data segments.
+    * Applies various low-pass filters:
+        * Simple averaging filter.
+        * 3rd Order Butterworth filter.
+        * 4th Order Butterworth filter.
+* **Audio Visualization:**
+    * Renders audio waveforms using raylib.
+    * Supports zooming functionality for detailed waveform inspection.
+* **Real-time Audio:**
+    * Basic audio recording capabilities implemented using miniaudio.
+* **Data Management:**
+    * Utilizes linked lists (`Node`) for managing chunks of audio data.
+    * Defines a `Track` structure to represent individual audio tracks.
+* **Basic UI Elements:**
+    * Includes structures (`DraggableBox`) suitable for creating simple draggable UI components within raylib.
+
+---
 
 ## Dependencies
 
-* **raylib.h:** For graphics and UI elements (like waveform drawing and draggable boxes).
-* **miniaudio.h:** For cross-platform audio playback and recording.
-* Standard C libraries: `stdio.h`, `stdlib.h`, `string.h`, `stdint.h`, `math.h`.
+* **[raylib](https://www.raylib.com/):** Required for all graphical output, window management, and UI elements (waveform drawing, interactive elements).
+* **[miniaudio](https://github.com/mackron/miniaudio):** Required for cross-platform audio playback and recording functionality. Typically included as a single header file within the project.
+* **Standard C Libraries:** `stdio.h`, `stdlib.h`, `string.h`, `stdint.h`, `math.h`.
 
-## Data Structures
+---
 
-* **`WAVHeader`**: Holds the metadata of a WAV file according to the standard WAV format specification.
-* **`Node`**: A node for a linked list, likely used to store chunks of PCM audio data (`int16_t *pcm`).
-* **`Track`**: Represents an audio track, potentially holding the head of a linked list (`Node *head`) of audio data chunks or a single continuous block (`int16_t *pcm`).
-* **`DraggableBox`**: A structure likely used with raylib for creating draggable UI elements, containing position (`Rectangle`), state (`dragging`, `offset`), and appearance (`Color`).
-* **`Screen` (enum)**: Defines different states or screens for the application (e.g., `Load`, `Real`, `Static`).
+## Prerequisites
 
-## Functions
+Before building the project, ensure you have the following installed on your system:
 
-### File I/O & Data Reading
+1.  **C Compiler:** A modern C compiler that supports C99 or later (e.g., GCC, Clang).
+2.  **Make:** The `make` build automation tool.
+3.  **raylib Library:** The raylib development library. Installation methods vary by operating system (e.g., package manager, compiling from source). Ensure the headers and library files are accessible by the compiler/linker.
 
-* **`void read_wav_header(const char* filename)`**: Reads the header information from the specified WAV file.
-* **`int16_t* read_pcm_data(const char* filename)`**: Reads the Pulse Code Modulation (PCM) audio data from the specified WAV file. Returns a pointer to the data.
-* **`void write_pcm_data()`**: Writes PCM data back to a file (details like filename and data source need clarification based on implementation).
+---
 
-### Data Structure Management
+## Building the Project
 
-* **`Node* insert(int16_t *data)`**: Inserts a block of PCM data into the linked list. Returns the new node.
-* **`void free_list()`**: Frees the memory allocated for the linked list storing audio data.
+This project uses `make` for a streamlined build process.
 
-### Audio Manipulation & Effects
+1.  **Navigate:** Open your terminal or command prompt and change to the directory containing the project's `Makefile` (typically the `src` directory or the project root if the Makefile is configured accordingly).
 
-* **`void reverse(const char *input_file, const char *output_file)`**: Reverses the audio data from `input_file` and saves it to `output_file`.
-* **`void low_filter(const char *input_file, const char *output_file2)`**: Applies a simple low-pass filter to the audio data.
-* **`void butterworth_low_filter(const char *input_file, const char *output_file)`**: Applies a Butterworth low-pass filter (order not specified in name, likely 2nd order based on other function names).
-* **`void butterworth_filter_4th_order(const char *input_file, const char *output_file)`**: Applies a 4th order Butterworth low-pass filter.
-* **`void butterworth_filter_3rd_order(const char *input_file, const char *output_file)`**: Applies a 3rd order Butterworth low-pass filter.
-
-### Waveform Visualization (Requires raylib)
-
-* **`void draw_waveform(const char *filepath, int num_samples)`**: Draws the waveform of the audio data from the specified file path. `num_samples` likely controls the section or resolution of the waveform displayed.
-* **`void zoom(int *num_samples)`**: Modifies the `num_samples` variable, likely used to zoom in or out of the waveform display handled by `draw_waveform`.
-
-### Audio Recording (Requires miniaudio)
-
-* **`void StartAudioRecording(void)`**: Initializes and starts the audio recording process.
-* **`void StopAudioRecording(void)`**: Stops the audio recording process.
-* **`void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)`**: The callback function required by miniaudio to handle incoming audio data during recording.
-
-## Global Variables
-
-* **`extern WAVHeader header;`**: A global instance of the WAVHeader struct, likely holding the header info of the currently loaded file.
-* **`extern Node* head;`**: A global pointer to the head of the linked list storing audio data chunks.
-
-## Building
-
-*(Instructions on how to compile the code would go here. This typically involves using a C compiler like GCC and linking against raylib and miniaudio.)*
-
-Example using GCC (assuming source files `main.c`, `util.c` and libraries are set up):
-
-```bash
-gcc main.c util.c -o sound_composer -lraylib -lminiaudio -lm # Add other necessary flags
-
-
-## Building
-
-This project uses `make` for building. Ensure you have `gcc`, `make`, and the necessary libraries (`raylib`) installed.
-
-1.  Navigate to the directory containing the `Makefile` (likely the `src` directory based on your file structure image).
-2.  Run the make command:
+2.  **Compile:** Run the `make` command:
     ```bash
     make
     ```
-    or
+    or explicitly:
     ```bash
     make all
     ```
-    This will compile the source files (`main.c`, `util.c`) into object files located in `../build/obj/` and then link them into the final executable located at `../build/bin/sound_composer`.
+    This command performs the following steps:
+    * Compiles the C source files (e.g., `main.c`, `util.c`) into object files. By default, these are often placed in a build directory (e.g., `../build/obj/`).
+    * Links the compiled object files with the necessary libraries (raylib, standard math library).
+    * Creates the final executable file (e.g., `../build/bin/sound_composer`).
 
-3.  *(Optional)* To clean up build files (object files and the executable):
+3.  **Clean (Optional):** To remove generated object files and the executable, run:
     ```bash
     make clean
     ```
 
-**Note:** If you encounter linking errors related to `miniaudio`, you may need to add `-lminiaudio` to the `LIBS` variable in your `Makefile`.
+**Note on Linking:** If you encounter linking errors related to `miniaudio` (unlikely if using the header-only version correctly) or other libraries like `pthread` or `dl` (sometimes required by raylib/miniaudio on Linux), you may need to add appropriate flags (e.g., `-lminiaudio`, `-lpthread`, `-ldl`) to the `LIBS` variable within the `Makefile`.
+
+---
 
 ## Usage
 
 After successfully building the project:
 
-1.  Run the executable directly from the directory containing the `Makefile`:
+1.  **Run via Make:** While in the directory containing the `Makefile`, you can often run the project using:
     ```bash
     make run
     ```
-    This command first ensures the project is built (`all` dependency) and then executes `../build/bin/sound_composer`.
+    This command typically depends on the `all` target (ensuring the project is built) and then executes the compiled program.
 
-2.  Alternatively, you can run the executable directly by specifying its path:
+2.  **Run Directly:** Alternatively, navigate to the directory containing the executable (e.g., `../build/bin/`) or run it using its relative path from the `Makefile` directory:
     ```bash
     ../build/bin/sound_composer
     ```
-   
 
+Executing the program will launch the application window, where you can interact with its features (loading files, viewing waveforms, etc., depending on the current implementation state).
+
+---
+
+## Code Structure
+
+### Data Structures
+
+* **`WAVHeader`**: Stores metadata parsed from a WAV file's header section.
+* **`Node`**: Represents a node in a linked list, designed to hold a chunk of PCM audio data (`int16_t *pcm`).
+* **`Track`**: Encapsulates an audio track, potentially using a linked list (`Node *head`) or a single contiguous buffer (`int16_t *pcm`) for its audio data.
+* **`DraggableBox`**: A utility structure for managing interactive, draggable rectangular areas within the raylib window.
+* **`Screen` (enum)**: Defines distinct states or views within the application (e.g., `Load`, `Real`, `Static`).
+
+### Core Functionality
+
+The codebase is broadly organized into the following areas:
+
+* **File I/O (`util.c` / `main.c`):** Functions for reading WAV headers (`read_wav_header`) and PCM data (`read_pcm_data`), and writing PCM data (`write_pcm_data`).
+* **Data Structure Management (`util.c` / `main.c`):** Functions for managing the linked list of audio data (`insert`, `free_list`).
+* **Audio Processing (`util.c`):** Implementation of audio effects like `reverse`, `low_filter`, and various Butterworth filters.
+* **Visualization (`main.c`):** Functions utilizing raylib to draw waveforms (`draw_waveform`) and handle interactions like zooming (`zoom`).
+* **Audio Recording (`main.c`):** Functions interfacing with miniaudio to manage recording (`StartAudioRecording`, `StopAudioRecording`) and handle the audio data stream (`data_callback`).
+* **Main Application Logic (`main.c`):** Contains the main loop, event handling, state management (`Screen`), and coordinates calls to other modules.
+
+*(Refer to comments within the source code files for detailed explanations of specific functions.)*
+
+---
+
+## Contributing
+
+Contributions are welcome! If you find bugs, have suggestions for improvements, or want to add new features, please feel free to:
+
+1.  Open an issue on the project's repository  to discuss the change.
+2.  Fork the repository, make your changes, and submit a pull request.
+
+
+
+---
+
+## License
+
+---
+
+## Acknowledgments
+
+* This project relies heavily on the fantastic [raylib](https://www.raylib.com/) library by Ramon Santamaria ([@raysan5](https://github.com/raysan5)) and contributors.
+* Audio recording and playback capabilities are provided by the excellent [miniaudio](https://github.com/mackron/miniaudio) library by David Reid ([@mackron](https://github.com/mackron)) and contributors.
+
+
+---
