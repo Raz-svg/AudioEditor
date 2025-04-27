@@ -30,7 +30,7 @@ SOUND_COMPOSER/
 ├── .cache/             # Build cache (optional)
 ├── README.md           # Project documentation (this file)
 
-
+```
 ## Features
 
 * Read WAV file headers and PCM data.
