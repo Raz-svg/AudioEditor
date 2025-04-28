@@ -33,73 +33,73 @@ int main() {
 
     Screen currentScreen = Load;
 
-    Image logo = LoadImage("../../assests/Group 1 (1).png");
+    Image logo = LoadImage("../../assets/Group 1 (1).png");
     if (logo.data == NULL) { TraceLog(LOG_WARNING, "Failed to load logo image"); CloseWindow(); return 1; }
     Texture2D texture1 = LoadTextureFromImage(logo);
     UnloadImage(logo);
 
-    Image dockfile=LoadImage("../../assests/Group 1 (7).png");
+    Image dockfile=LoadImage("../../assets/Group 1 (7).png");
     if (dockfile.data == NULL) { TraceLog(LOG_WARNING, "Failed to load dockfile image"); CloseWindow(); return 1; }
     Texture2D texture3 = LoadTextureFromImage(dockfile);
     UnloadImage(dockfile);
 
-    Image merge=LoadImage("../../assests/Group 1 (8).png");
+    Image merge=LoadImage("../../assets/Group 1 (8).png");
     if(merge.data == NULL) { TraceLog(LOG_WARNING, "Failed to load merge image"); CloseWindow(); return 1; }
     Texture2D texture4 = LoadTextureFromImage(merge);
     UnloadImage(merge);
 
-    Image lowfile=LoadImage("../../assests/Group 1 (9).png");
+    Image lowfile=LoadImage("../../assets/Group 1 (9).png");
     if(lowfile.data == NULL) { TraceLog(LOG_WARNING, "Failed to load lowfile image"); CloseWindow(); return 1; }
     Texture2D texture5 = LoadTextureFromImage(lowfile);
     UnloadImage(lowfile);
 
-    Image reversefile=LoadImage("../../assests/Group 1 (10).png");
+    Image reversefile=LoadImage("../../assets/Group 1 (10).png");
     if(reversefile.data == NULL) { TraceLog(LOG_WARNING, "Failed to load reversefile image"); CloseWindow(); return 1; }
     Texture2D texture6 = LoadTextureFromImage(reversefile);
     UnloadImage(reversefile);
 
     // Filter level images
-    Image level1=LoadImage("../../assests/Group 1 (17).png");
+    Image level1=LoadImage("../../assets/Group 1 (17).png");
     if(level1.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level1 image"); CloseWindow(); return 1; }
     Texture2D texture7 = LoadTextureFromImage(level1);
     UnloadImage(level1);
 
-    Image level2=LoadImage("../../assests/Group 3 (2).png");
+    Image level2=LoadImage("../../assets/Group 3 (2).png");
     if(level2.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level2 image"); CloseWindow(); return 1; }
     Texture2D texture8 = LoadTextureFromImage(level2);
     UnloadImage(level2);
 
-    Image level3=LoadImage("../../assests/Group 6.png");
+    Image level3=LoadImage("../../assets/Group 6.png");
     if(level3.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level3 image"); CloseWindow(); return 1; }
     Texture2D texture9 = LoadTextureFromImage(level3);
     UnloadImage(level3);
 
-    Image level4=LoadImage("../../assests/Group 5.png");
+    Image level4=LoadImage("../../assets/Group 5.png");
     if(level4.data == NULL) { TraceLog(LOG_WARNING, "Failed to load level4 image"); CloseWindow(); return 1; }
     Texture2D texture10 = LoadTextureFromImage(level4);
     UnloadImage(level4);
 
-    Image playbar=LoadImage("../../assests/Group 1 (20).png");
+    Image playbar=LoadImage("../../assets/Group 1 (20).png");
     if(playbar.data == NULL) { TraceLog(LOG_WARNING, "Failed to load playbar image"); CloseWindow(); return 1; }
     Texture2D texture11 = LoadTextureFromImage(playbar);
     UnloadImage(playbar);
 
-    Image play=LoadImage("../../assests/Polygon 1 (2).png");
+    Image play=LoadImage("../../assets/Polygon 1 (2).png");
     if(play.data == NULL) { TraceLog(LOG_WARNING, "Failed to load play image"); CloseWindow(); return 1; }
     Texture2D texture12 = LoadTextureFromImage(play);
     UnloadImage(play);
 
-    Image pause=LoadImage("../../assests/Group 3 (3).png");
+    Image pause=LoadImage("../../assets/Group 3 (3).png");
     if(pause.data == NULL) { TraceLog(LOG_WARNING, "Failed to load pause image"); CloseWindow(); return 1; }
     Texture2D texture13 = LoadTextureFromImage(pause);
     UnloadImage(pause);
 
-    Image rev=LoadImage("../../assests/Group 1 (21).png");
+    Image rev=LoadImage("../../assets/Group 1 (21).png");
     if(rev.data == NULL) { TraceLog(LOG_WARNING, "Failed to load reverse image"); CloseWindow(); return 1; }
     Texture2D texture14 = LoadTextureFromImage(rev);
     UnloadImage(rev);
 
-    Image forward=LoadImage("../../assests/Group 2 (6).png");
+    Image forward=LoadImage("../../assets/Group 2 (6).png");
     if(forward.data == NULL) { TraceLog(LOG_WARNING, "Failed to load forward image"); CloseWindow(); return 1; }
     Texture2D texture15 = LoadTextureFromImage(forward);
     UnloadImage(forward);
