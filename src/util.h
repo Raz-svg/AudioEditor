@@ -1,9 +1,8 @@
 #ifndef WAV_UTILS_H
 #define WAV_UTILS_H
 
-// Include raylib.h BEFORE using Color
 #include "raylib.h"
-#include "miniaudio.h" // Keep other includes
+#include "miniaudio.h" 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +55,7 @@ int16_t* read_pcm_data(const char* filename);
 
 Node* insert(int16_t *data);
 
-void write_pcm_data();
+void write_pcm_data(char* filename);
 
 void free_list();
 
@@ -71,7 +70,7 @@ void butterworth_filter_4th_order(const char *input_file, const char *output_fil
 void butterworth_filter_3rd_order(const char *input_file, const char *output_file);
 
 void StartAudioRecording(void);
-void StopAudioRecording(void);
+void StopAudioRecording(char* filename);
 
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
 extern WAVHeader header;

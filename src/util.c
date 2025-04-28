@@ -455,7 +455,7 @@ void StartAudioRecording()
     isRecording = true;
 }
 
-void StopAudioRecording()
+void StopAudioRecording(char* recordedFileName)
 {
     if (isRecording) {
         ma_device_uninit(&device);
@@ -474,7 +474,7 @@ void StopAudioRecording()
         int raw_size = ftell(raw);
         fseek(raw, 0, SEEK_SET);
 
-        FILE* wav = fopen("real_time_recording.wav", "wb");
+        FILE* wav = fopen(recordedFileName, "wb");
         if (!wav) {
             printf("Failed to open WAV output file.\n");
             fclose(raw);
