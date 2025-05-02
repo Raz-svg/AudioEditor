@@ -27,9 +27,9 @@ A foundational C project demonstrating audio manipulation, visualization, and re
 
 ---
 
-![Real](assests/one.png)
-![Static_window](assests/two.png)
-![Static](assests/three.png)
+![Real](assets/one.png)
+![Static_window](assets/two.png)
+![Static](assets/three.png)
 
 ## Key Features
 

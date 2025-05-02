@@ -332,8 +332,8 @@ int main() {
                            // Check file validity
                            if (FileExists(inputFile) && IsFileExtension(inputFile, ".wav")) {
                             char outputFile[MAX_FILEPATH_SIZE];
-                            snprintf(outputFile, MAX_FILEPATH_SIZE, "%s_reversed_%d.wav", GetFileNameWithoutExt(inputFile), reverse_count);
-
+                            snprintf(outputFile, MAX_FILEPATH_SIZE, "reversed_%d.wav", reverse_count);
+                           // GetFileNameWithoutExt(inputFile)
                             reverse(inputFile, outputFile);
 
                             TraceLog(LOG_INFO, "Reversed file: %s -> %s", GetFileName(inputFile), outputFile);
